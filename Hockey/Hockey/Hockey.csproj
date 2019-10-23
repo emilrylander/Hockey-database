@@ -180,9 +180,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Teams.cshtml" />
-    <Content Include="Views\Home\Matches.cshtml" />
-    <Content Include="Views\Home\Arenas.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Hockey\Teams.cshtml" />
+    <Content Include="Views\Hockey\Matches.cshtml" />
+    <Content Include="Views\Hockey\Arenas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,14 +17,13 @@
             foreach (var team in Model)
             {
                 <tr>
-                    <td>@Html.DisplayFor(x => team.Teamname)</td>
-
+                    <td>@Html.DisplayName(team.Teamname)</td>
                 </tr>
             }
         }
-        @{ 
 
-        }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public CreateTeam Create([)
     </tbody>
 </table>

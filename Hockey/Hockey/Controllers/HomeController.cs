@@ -8,22 +8,16 @@ namespace Hockey.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Arenas()
         {
             return View();
         }
-
-        public ActionResult About()
+        public ActionResult Teams()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
-
-        public ActionResult Contact()
+        public ActionResult Matches()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

@@ -1,7 +1,30 @@
-﻿
+﻿@model IEnumerable<Hockey.Models.Team>
 @{
     ViewBag.Title = "Teams";
 }
 
 <h2>Teams</h2>
 
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(Team => Team.Teamname)</th>
+      
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var team in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(x => team.Teamname)</td>
+
+                </tr>
+            }
+        }
+        @{ 
+
+        }
+
+    </tbody>
+</table>

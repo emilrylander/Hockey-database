@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +13,11 @@ namespace Hockey.Models
         public int ID { get; set; }
         public string Teamname { get; set; }
     }
+    public class TeamDBContext : DbContext
+    {
+        public DbSet<Team> Teams { get; set; }
+    }
+
     public class Arena
     {
         public int ID { get; set; }

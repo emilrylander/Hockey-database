@@ -21,19 +21,41 @@ namespace Hockey.Controllers
             List<Team> teams = dbContext.Teams.ToList();
             return View(teams);
         }
-        public ActionResult Matches()
-        {
-            return View();
-        }
-    }
 
-    public class TeamController : Controller
-    {
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TeamName")]Team team)
         {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    dbContext.Teams.Add(team);
+                    dbContext.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch 
+            {
+                ModelState.AddModelError("", "Unable to save changes.");
+            }
+
+            return View(team);
+        }
+
+        public ActionResult Matches()
+        {
             return View();
+        }
+
+        public class TeamController : Controller
+        {
+            [HttpPost]
+            [ValidateAntiForgeryToken]
+            public ActionResult Create([Bind(Include = "TeamName")]Team team)
+            {
+                return View();
+            }
         }
     }
 }

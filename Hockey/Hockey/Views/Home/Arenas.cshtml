@@ -1,7 +1,35 @@
-﻿
+﻿@model IEnumerable<Hockey.Models.Arena>
 @{
+
     ViewBag.Title = "Arenas";
 }
 
 <h2>Arenas</h2>
 
+
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(a => a.Arenaname)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var Arena in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayName(Arena.Arenaname)</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<br /><br /><br />
+
+@using (Html.BeginForm("Arenas", "Home", FormMethod.Post))
+{
+    //vad är den Default värde för den här !!!.
+    @Html.EditorFor(model => model.FirstOrDefault().Arenaname)
+    <input type="submit" value="Submit" />
+}

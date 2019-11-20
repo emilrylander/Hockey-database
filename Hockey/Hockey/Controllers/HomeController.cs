@@ -14,41 +14,69 @@ namespace Hockey.Controllers
 
         public ActionResult Arenas()
         {
-            return View();
+
+            List<Arena> Arenas = dbContext.Arenas.ToList();
+            return View(Arenas);
+        }
+
+        /*
+         * POST: sends Arenas
+         * */
+        [HttpPost]
+        public ActionResult Arenas([Bind(Include = "Arenaname")]Arena model)
+        {
+            try
+            {
+
+                List<Arena> Arenas = dbContext.Arenas.ToList();
+
+                Arena a = new Arena();
+                a.Arenaname = model.Arenaname;
+
+                dbContext.Arenas.Add(a);
+                dbContext.SaveChanges();
+
+                return RedirectToAction("Arenas");
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
         }
         public ActionResult Teams()
         {
             List<Team> teams = dbContext.Teams.ToList();
             return View(teams);
         }
-        
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateTeam([Bind(Include = "Teamname")]Team Teamname)
+        public ActionResult Teams([Bind(Include = "Teamname")]Team model)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    dbContext.Teams.Add(Teamname);
-                    dbContext.SaveChanges();
-                    return RedirectToAction("Teams");
-                }
-            }
-            catch 
-            {
-                ModelState.AddModelError("", "Unable to save changes.");
-            }
+                List<Team> Teamns = dbContext.Teams.ToList();
 
-            return View("Teams");
+                Team a = new Team();
+                a.Teamname = model.Teamname;
+
+                dbContext.Teams.Add(a);
+                dbContext.SaveChanges();
+
+                return RedirectToAction("Teams");
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
-        public ActionResult Matches()
+        public ActionResult matches()
         {
             return View();
         }
-
 
     }
 }

@@ -26,14 +26,14 @@
 
     </tbody>
 </table>
+
 @using (Html.BeginForm("CreateTeam", "Home", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
         <h4>Team</h4>
         <hr />
-        @Html.ValidationSummary(true)
-        @Html.HiddenFor(model => model.FirstOrDefault().ID)
+        @Html.ValidationSummary()
 
         <div class="form-group">
             @Html.LabelFor(model => model.FirstOrDefault().Teamname, new { @class = "control-label col-md-2" })

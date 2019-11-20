@@ -41,7 +41,7 @@ namespace Hockey.Controllers
                 ModelState.AddModelError("", "Unable to save changes.");
             }
 
-            return View(Teamname);
+            return View("Teams");
         }
 
         public ActionResult Matches()

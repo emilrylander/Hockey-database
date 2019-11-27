@@ -29,9 +29,24 @@
 
 <br /><br /><br />
 
-@using (Html.BeginForm("Teams", "Home", FormMethod.Post))
+<p>Add Teams</p>
+
+@using (Html.BeginForm("AddTeams", "Home", FormMethod.Post))
 {
     //vad är den Default värde för den här !!!.
-    @Html.EditorFor(model => model.FirstOrDefault().Teamname)
-    <input type="submit" value="Submit" />
+    Hockey.Models.Team team = new Hockey.Models.Team();
+    @Html.EditorFor(x => team.Teamname, new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
+    <input type="submit" value="Add" />
+}
+
+<br /><br />
+
+<p>Remove Teams</p>
+
+@using (Html.BeginForm("RemoveTeams", "Home", FormMethod.Post))
+{
+    //vad är den Default värde för den här !!!.
+    Hockey.Models.Team team = new Hockey.Models.Team();
+    @Html.EditorFor(x => team.Teamname, new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
+    <input type="submit" value="Remove" />
 }

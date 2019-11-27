@@ -27,9 +27,24 @@
 
 <br /><br /><br />
 
-@using (Html.BeginForm("Arenas", "Home", FormMethod.Post))
+<p>Add Arena</p>
+
+@using (Html.BeginForm("AddArenas", "Home", FormMethod.Post))
 {
     //vad är den Default värde för den här !!!.
-    @Html.EditorFor(model => model.FirstOrDefault().Arenaname)
-    <input type="submit" value="Submit" />
+    Hockey.Models.Arena arena= new Hockey.Models.Arena();
+    @Html.EditorFor(x => arena.Arenaname, new { htmlAttributes = new { @Name = "Arenaname", @id = "Arenaname" } })
+    <input type="submit" value="Add" />
+}
+
+<br /><br />
+
+<p>Remove Arena</p>
+
+@using (Html.BeginForm("RemoveArena", "Home", FormMethod.Post))
+{
+    //vad är den Default värde för den här !!!.
+    Hockey.Models.Arena arena= new Hockey.Models.Arena();
+    @Html.EditorFor(x => arena.Arenaname, new { htmlAttributes = new { @Name = "Arenaname", @id = "Arenaname" } })
+    <input type="submit" value="Remove" />
 }

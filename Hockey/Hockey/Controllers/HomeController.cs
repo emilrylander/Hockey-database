@@ -19,11 +19,8 @@ namespace Hockey.Controllers
             return View(Arenas);
         }
 
-        /*
-         * POST: sends Arenas
-         * */
         [HttpPost]
-        public ActionResult Arenas([Bind(Include = "Arenaname")]Arena model)
+        public ActionResult AddArenas([Bind(Include = "Arenaname")]Arena model)
         {
             try
             {
@@ -45,6 +42,24 @@ namespace Hockey.Controllers
             }
 
         }
+
+        [HttpPost]
+        public ActionResult RemoveArena([Bind(Include = "Arenaname")]Arena model)
+        {
+            try
+            {
+                Arena ArenaToRemove = dbContext.Arenas.Where(x => x.Arenaname == model.Arenaname).FirstOrDefault();
+                dbContext.Arenas.Remove(ArenaToRemove);
+                dbContext.SaveChanges();
+
+                return RedirectToAction("Arenas");
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public ActionResult Teams()
         {
             List<Team> teams = dbContext.Teams.ToList();
@@ -52,7 +67,7 @@ namespace Hockey.Controllers
         }
 
         [HttpPost]
-        public ActionResult Teams([Bind(Include = "Teamname")]Team model)
+        public ActionResult AddTeams([Bind(Include = "Teamname")]Team model)
         {
             try
             {
@@ -66,6 +81,23 @@ namespace Hockey.Controllers
 
                 return RedirectToAction("Teams");
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPost]
+        public ActionResult RemoveTeams([Bind(Include = "Teamname")]Team model)
+        {
+            try
+            {
+                Team teamToRemove = dbContext.Teams.Where(x => x.Teamname == model.Teamname).FirstOrDefault();
+                dbContext.Teams.Remove(teamToRemove);
+                dbContext.SaveChanges();
+
+                return RedirectToAction("Teams");
             }
             catch (Exception ex)
             {

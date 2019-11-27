@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="Models\DatabaseContext.cs" />
     <Compile Include="Models\HockeyDbTables.cs" />
+    <Compile Include="Models\ViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

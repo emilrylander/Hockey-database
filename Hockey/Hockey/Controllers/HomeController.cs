@@ -75,7 +75,22 @@ namespace Hockey.Controllers
 
         public ActionResult matches()
         {
-            return View();
+            List<MatchViewModel> modelMatches = new List<MatchViewModel>();
+            List<Match> matches = dbContext.Matches.ToList();
+
+            foreach(Match match in matches)
+            {
+                MatchViewModel viewMatch = new MatchViewModel();
+                viewMatch.HomeTeam = dbContext.Teams.Find(match.HomeTeamID).Teamname;
+                viewMatch.AwayTeam = dbContext.Teams.Find(match.GoneTeamID).Teamname;
+                viewMatch.HomeScore = match.HomeTeamScore;
+                viewMatch.GoneScore = match.GoneTeamScore;
+                viewMatch.Arena = dbContext.Arenas.Find(match.ArenaID).Arenaname;
+            
+                modelMatches.Add(viewMatch);
+            }
+
+            return View(modelMatches);
         }
 
     }

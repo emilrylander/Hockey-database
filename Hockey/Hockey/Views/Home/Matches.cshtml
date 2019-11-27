@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<Hockey.Models.MatchViewModel>
 @{
     ViewBag.Title = "Matches";
 }
@@ -7,7 +7,30 @@
 <meta charset="utf-8" />
 <table>
     <thead>
+        <tr>
+            <th>
+               Arena 
+            </th>
+            <th>
+               Home
+            </th>
+            <th>
+               Gone
+            </th>
+            <th>
+
+            </th>
+        </tr>
     </thead>
     <tbody>
+        @foreach (var match in Model)
+        {
+        <tr>
+            <td>@Html.DisplayName(match.Arena)</td>
+            <td>@Html.DisplayName(match.HomeTeam)</td>
+            <td>@Html.DisplayName(match.AwayTeam)</td>
+            <td>@Html.DisplayName(match.HomeScore.ToString())"/"@Html.DisplayName(match.GoneScore.ToString()) </td>
+        </tr>
+        }
     </tbody>
 </table>

@@ -22,3 +22,13 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#matchTable{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 50%;
+}
+#matchTable th, td{
+    border: 1px solid black;
+    margin-right: 100px;
+}

@@ -107,27 +107,34 @@ namespace Hockey.Controllers
 
         public ActionResult matches()
         {
-            List<MatchViewModel> modelMatches = new List<MatchViewModel>();
-            List<Match> matches = new List<Match>();
-            matches = dbContext.Matches.ToList();
+            MatchesViewModel viewModel = new MatchesViewModel();
 
-            foreach (Match match in matches)
+            List<MatchViewModel> modelMatches = new List<MatchViewModel>();
+            List<Match> dbMatches = new List<Match>();
+            dbMatches = dbContext.Matches.ToList();
+
+            foreach (Match dbMatch in dbMatches)
             {
                 MatchViewModel viewMatch = new MatchViewModel();
-                viewMatch.HomeTeam = dbContext.Teams.Find(match.HomeTeamID).Teamname;
-                viewMatch.GoneTeam = dbContext.Teams.Find(match.GoneTeamID).Teamname;
-                viewMatch.HomeScore = match.HomeTeamScore;
-                viewMatch.GoneScore = match.GoneTeamScore;
-                viewMatch.Arena = dbContext.Arenas.Find(match.ArenaID).Arenaname;
+
+                viewMatch.HomeTeam = dbContext.Teams.Find(dbMatch.HomeTeamID).Teamname;
+                viewMatch.GoneTeam = dbContext.Teams.Find(dbMatch.GoneTeamID).Teamname;
+                viewMatch.HomeScore = dbMatch.HomeTeamScore;
+                viewMatch.GoneScore = dbMatch.GoneTeamScore;
+                viewMatch.Arena = dbContext.Arenas.Find(dbMatch.ArenaID).Arenaname;
 
                 modelMatches.Add(viewMatch);
             }
 
-            return View(modelMatches);
+            viewModel.matches = modelMatches;
+            viewModel.ArenaList = dbContext.Arenas.ToList();
+            viewModel.TeamList = dbContext.Teams.ToList();
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult Matches([Bind(Include = "Teamname")]Match model)
+        public ActionResult AddMatches([Bind(Include = "ArenaID, HomeTeamID, GoneTeamID, HomeTeamScore, GoneTeamScore")]Match model)
         {
             try
             {

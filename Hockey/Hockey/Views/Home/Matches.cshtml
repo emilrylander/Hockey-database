@@ -1,11 +1,11 @@
-﻿@model IEnumerable<Hockey.Models.MatchViewModel>
+﻿@model Hockey.Models.MatchesViewModel
 @{
     ViewBag.Title = "Matches";
 }
 
 <h2>Matches</h2>
 <meta charset="utf-8" />
-<table>
+<table id="MatchTable">
     <thead>
         <tr>
             <th>
@@ -23,34 +23,71 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var match in Model)
-        {
-            <tr>
-                <td>@Html.DisplayName(match.Arena)   </td>
-                <td>@Html.DisplayName(match.HomeTeam)   </td>
-                <td>@Html.DisplayName(match.GoneTeam)   </td>
-                <td>@Html.DisplayName(match.HomeScore.ToString()) / @Html.DisplayName(match.GoneScore.ToString())  </td>
-            </tr>
+        @{
+
+            foreach (var match in Model.matches)
+            {
+                <tr>
+                    <td>@Html.DisplayName(match.Arena)   </td>
+                    <td>@Html.DisplayName(match.HomeTeam)   </td>
+                    <td>@Html.DisplayName(match.GoneTeam)   </td>
+                    <td>@Html.DisplayName(match.HomeScore.ToString()) / @Html.DisplayName(match.GoneScore.ToString())  </td>
+                </tr>
+            }
+
         }
+
     </tbody>
 </table>
 
 <br /><br /><br />
 
 
-            <form action="/Home/Matches" method="get">
-                <fieldset>Arena <select id="Arena" name="Arena"</fieldset>
-                <option value="0"></option>
-
-                @{
-                    int v = 1;
-                    //foreach (var Arena in model.ArenaList)
-                    {
-                        //option value="v">@Html.DisplayName(Arena)</option>
-                        v++;
-                    }
+<form action="/Home/Matches" method="get">
+    <fieldset>
+        <legend>Arena</legend>
+        <select id="Arena" name="Arena">
+            <option value="0">--Select Arena--</option>
+            @{
+                foreach (var Arena in Model.ArenaList)
+                {
+                    <option value="@Arena.ID">@Html.DisplayName(Arena.Arenaname)</option>
                 }
+            }
+        </select>
+    </fieldset>
 
+    <fieldset>
+        <legend>Home Team</legend>
+        <select id="HomeTeam" name="HomeTeam">
+            <option value="0">--Select Team--</option>
+            @{
+                foreach (var Team in Model.TeamList)
+                {
+                    <option value="@Team.ID">@Html.DisplayName(Team.Teamname)</option>
+                }
+            }
+        </select>
+        @using (Html.BeginForm("", "Home", FormMethod.Post))
+        {
+            @Html.EditorFor(x => , new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
+        }
+        </select>
+    </fieldset>
 
+    <fieldset>
+        <legend>Gone Team</legend>
+        <select id="HomeTeam" name="HomeTeam">
+            <option value="0">--Select Team--</option>
+            @{
+                foreach (var Team in Model.TeamList)
+                {
+                    <option value="@Team.ID">@Html.DisplayName(Team.Teamname)</option>
+                }
+            }
+        </select>
+    </fieldset>
 
-            </form>
+    <input type="submit" value="Add" />
+
+</form>

@@ -12,8 +12,12 @@ namespace Hockey.Models
         public string GoneTeam { get; set; }
         public int HomeScore { get; set; }
         public int GoneScore { get; set; }
+    }
 
-        public List<Arena> ArenaList = new List<Arena>();
-        public List<Team> TeamList = new List<Team>();
+    public class MatchesViewModel
+    {
+        public List<MatchViewModel> matches { get; set; }
+        public List<Arena> ArenaList { get; set; }
+        public List<Team> TeamList { get; set; }
     }
 }

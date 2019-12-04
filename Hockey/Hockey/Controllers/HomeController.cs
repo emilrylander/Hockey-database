@@ -108,9 +108,10 @@ namespace Hockey.Controllers
         public ActionResult matches()
         {
             List<MatchViewModel> modelMatches = new List<MatchViewModel>();
-            List<Match> matches = dbContext.Matches.ToList();
+            List<Match> matches = new List<Match>();
+            matches = dbContext.Matches.ToList();
 
-            foreach(Match match in matches)
+            foreach (Match match in matches)
             {
                 MatchViewModel viewMatch = new MatchViewModel();
                 viewMatch.HomeTeam = dbContext.Teams.Find(match.HomeTeamID).Teamname;
@@ -118,7 +119,7 @@ namespace Hockey.Controllers
                 viewMatch.HomeScore = match.HomeTeamScore;
                 viewMatch.GoneScore = match.GoneTeamScore;
                 viewMatch.Arena = dbContext.Arenas.Find(match.ArenaID).Arenaname;
-            
+
                 modelMatches.Add(viewMatch);
             }
 

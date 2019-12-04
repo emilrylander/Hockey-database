@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -26,10 +27,15 @@ namespace Hockey.Models
     public class Match
     {
         public int ID { get; set; }
+        [Column("arena")]
         public int ArenaID { get; set; }
+        [Column("hometeam")]
         public int HomeTeamID { get; set; }
+        [Column("homescore")]
         public int HomeTeamScore { get; set; }
+        [Column("goneteam")]
         public int GoneTeamID { get; set; }
+        [Column("gonescore")]
         public int GoneTeamScore { get; set; }
 
     }

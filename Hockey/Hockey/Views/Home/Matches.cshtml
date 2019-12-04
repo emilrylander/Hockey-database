@@ -26,10 +26,10 @@
         @foreach (var match in Model)
         {
             <tr>
-                <td>@Html.DisplayName(match.Arena)</td>
-                <td>@Html.DisplayName(match.HomeTeam)</td>
-                <td>@Html.DisplayName(match.GoneTeam)</td>
-                <td>@Html.DisplayName(match.HomeScore.ToString())"/"@Html.DisplayName(match.GoneScore.ToString()) </td>
+                <td>@Html.DisplayName(match.Arena)   </td>
+                <td>@Html.DisplayName(match.HomeTeam)   </td>
+                <td>@Html.DisplayName(match.GoneTeam)   </td>
+                <td>@Html.DisplayName(match.HomeScore.ToString()) / @Html.DisplayName(match.GoneScore.ToString())  </td>
             </tr>
         }
     </tbody>
@@ -44,9 +44,9 @@
 
                 @{
                     int v = 1;
-                    foreach (var Arena in model.ArenaList)
+                    //foreach (var Arena in model.ArenaList)
                     {
-                        <option value="v">@Html.DisplayName(Arena)</option>
+                        //option value="v">@Html.DisplayName(Arena)</option>
                         v++;
                     }
                 }

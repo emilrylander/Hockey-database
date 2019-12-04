@@ -9,28 +9,48 @@
     <thead>
         <tr>
             <th>
-               Arena 
+                Arena
             </th>
             <th>
-               Home
+                Home
             </th>
             <th>
-               Gone
+                Gone
             </th>
             <th>
-
+                Score
             </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var match in Model)
         {
-        <tr>
-            <td>@Html.DisplayName(match.Arena)</td>
-            <td>@Html.DisplayName(match.HomeTeam)</td>
-            <td>@Html.DisplayName(match.AwayTeam)</td>
-            <td>@Html.DisplayName(match.HomeScore.ToString())"/"@Html.DisplayName(match.GoneScore.ToString()) </td>
-        </tr>
+            <tr>
+                <td>@Html.DisplayName(match.Arena)</td>
+                <td>@Html.DisplayName(match.HomeTeam)</td>
+                <td>@Html.DisplayName(match.GoneTeam)</td>
+                <td>@Html.DisplayName(match.HomeScore.ToString())"/"@Html.DisplayName(match.GoneScore.ToString()) </td>
+            </tr>
         }
     </tbody>
 </table>
+
+<br /><br /><br />
+
+
+            <form action="/Home/Matches" method="get">
+                <fieldset>Arena <select id="Arena" name="Arena"</fieldset>
+                <option value="0"></option>
+
+                @{
+                    int v = 1;
+                    foreach (var Arena in model.ArenaList)
+                    {
+                        <option value="v">@Html.DisplayName(Arena)</option>
+                        v++;
+                    }
+                }
+
+
+
+            </form>

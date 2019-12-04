@@ -56,7 +56,7 @@ namespace Hockey.Controllers
         {
             try
             {
-                List<Team> Teamns = dbContext.Teams.ToList();
+                List<Team> Teams = dbContext.Teams.ToList();
 
                 Team a = new Team();
                 a.Teamname = model.Teamname;
@@ -82,7 +82,7 @@ namespace Hockey.Controllers
             {
                 MatchViewModel viewMatch = new MatchViewModel();
                 viewMatch.HomeTeam = dbContext.Teams.Find(match.HomeTeamID).Teamname;
-                viewMatch.AwayTeam = dbContext.Teams.Find(match.GoneTeamID).Teamname;
+                viewMatch.GoneTeam = dbContext.Teams.Find(match.GoneTeamID).Teamname;
                 viewMatch.HomeScore = match.HomeTeamScore;
                 viewMatch.GoneScore = match.GoneTeamScore;
                 viewMatch.Arena = dbContext.Arenas.Find(match.ArenaID).Arenaname;
@@ -93,5 +93,30 @@ namespace Hockey.Controllers
             return View(modelMatches);
         }
 
+        [HttpPost]
+        public ActionResult Matches([Bind(Include = "Teamname")]Match model)
+        {
+            try
+            {
+                List<Match> Matches = dbContext.Matches.ToList();
+
+                Match Form = new Match();
+                Form.ArenaID = model.ArenaID;
+                Form.HomeTeamID = model.HomeTeamID;
+                Form.GoneTeamID = model.GoneTeamID;
+                Form.HomeTeamScore = model.HomeTeamScore;
+                Form.GoneTeamScore = model.GoneTeamScore;
+                dbContext.Matches.Add(Form);
+
+                dbContext.SaveChanges();
+
+                return RedirectToAction("matches");
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

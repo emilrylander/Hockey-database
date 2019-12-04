@@ -27,13 +27,13 @@ namespace Hockey.Models
     public class Match
     {
         public int ID { get; set; }
-        [Column("arena")]
+        [Column("arena_id")]
         public int ArenaID { get; set; }
-        [Column("hometeam")]
+        [Column("hometeam_id")]
         public int HomeTeamID { get; set; }
         [Column("homescore")]
         public int HomeTeamScore { get; set; }
-        [Column("goneteam")]
+        [Column("goneteam_id")]
         public int GoneTeamID { get; set; }
         [Column("gonescore")]
         public int GoneTeamScore { get; set; }

@@ -70,9 +70,8 @@
         </select>
         @using (Html.BeginForm("", "Home", FormMethod.Post))
         {
-            @Html.EditorFor(x => , new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
+            @Html.EditorFor(x => x.TeamList, new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
         }
-        </select>
     </fieldset>
 
     <fieldset>
@@ -86,6 +85,15 @@
                 }
             }
         </select>
+        @using (Html.BeginForm("", "Gone", FormMethod.Post))
+        {
+            @Html.EditorFor(x => x.TeamList, new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
+        }
+    </fieldset>
+
+    <fieldset>
+        <legend>Results</legend>
+
     </fieldset>
 
     <input type="submit" value="Add" />

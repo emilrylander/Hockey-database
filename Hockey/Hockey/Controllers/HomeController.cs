@@ -109,22 +109,7 @@ namespace Hockey.Controllers
         {
             MatchesViewModel viewModel = new MatchesViewModel();
 
-            List<MatchViewModel> modelMatches = new List<MatchViewModel>();
-            List<Match> dbMatches = new List<Match>();
-            dbMatches = dbContext.Matches.ToList();
-
-            foreach (Match dbMatch in dbMatches)
-            {
-                MatchViewModel viewMatch = new MatchViewModel();
-
-                viewMatch.HomeTeam = dbContext.Teams.Find(dbMatch.HomeTeamID).Teamname;
-                viewMatch.GoneTeam = dbContext.Teams.Find(dbMatch.GoneTeamID).Teamname;
-                viewMatch.HomeScore = dbMatch.HomeTeamScore;
-                viewMatch.GoneScore = dbMatch.GoneTeamScore;
-                viewMatch.Arena = dbContext.Arenas.Find(dbMatch.ArenaID).Arenaname;
-
-                modelMatches.Add(viewMatch);
-            }
+            List<MatchViewModel> modelMatches = GetMatches();
 
             viewModel.matches = modelMatches;
             viewModel.ArenaList = dbContext.Arenas.ToList();
@@ -134,29 +119,85 @@ namespace Hockey.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMatches([Bind(Include = "ArenaID, HomeTeamID, GoneTeamID, HomeTeamScore, GoneTeamScore")]Match model)
+        public ActionResult AddMatches( int Arena, int HomeTeam, int GoneTeam, int HomeScore, int GoneScore)
         {
+            if(Arena == 0 || HomeTeam == 0 || GoneTeam == 0)
+            {
+                if(Arena == 0)
+                    ModelState.AddModelError("", "Must select a Arena!");
+                if(HomeTeam == 0)
+                    ModelState.AddModelError("", "Must select a Home Team!");
+                if(GoneTeam == 0)
+                    ModelState.AddModelError("", "Must select a Gone Team!");
+
+                MatchesViewModel viewModel = new MatchesViewModel();
+                viewModel.matches = GetMatches();
+                viewModel.ArenaList = dbContext.Arenas.ToList();
+                viewModel.TeamList = dbContext.Teams.ToList();
+
+                return View("matches", viewModel);
+            }
             try
             {
                 List<Match> Matches = dbContext.Matches.ToList();
 
                 Match Form = new Match();
-                Form.ArenaID = model.ArenaID;
-                Form.HomeTeamID = model.HomeTeamID;
-                Form.GoneTeamID = model.GoneTeamID;
-                Form.HomeTeamScore = model.HomeTeamScore;
-                Form.GoneTeamScore = model.GoneTeamScore;
+                Form.ArenaID = Arena;
+                Form.HomeTeamID = HomeTeam;
+                Form.GoneTeamID = GoneTeam;
+                Form.HomeTeamScore = HomeScore;
+                Form.GoneTeamScore = GoneScore;
                 dbContext.Matches.Add(Form);
+
 
                 dbContext.SaveChanges();
 
                 return RedirectToAction("matches");
+                
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("matches");
+            }
+        }
 
+        [HttpPost]
+        public ActionResult RemoveMatches([Bind(Include = "ID")]Match model)
+        {
+            try
+            {
+                Match matchToRemove = dbContext.Matches.Where(x => x.ID == model.ID).FirstOrDefault();
+                dbContext.Matches.Remove(matchToRemove);
+                dbContext.SaveChanges();
+
+                return RedirectToAction("matches");
             }
             catch (Exception ex)
             {
                 throw ex;
             }
+        }
+
+        public List<MatchViewModel> GetMatches()
+        {
+            List<MatchViewModel> modelMatches = new List<MatchViewModel>();
+            List<Match> dbMatches = dbContext.Matches.ToList();
+
+            foreach (Match dbMatch in dbMatches)
+            {
+                MatchViewModel viewMatch = new MatchViewModel();
+
+                viewMatch.ID = dbContext.Matches.Find(dbMatch.ID).ID;
+                viewMatch.HomeTeam = dbContext.Teams.Find(dbMatch.HomeTeamID).Teamname;
+                viewMatch.GoneTeam = dbContext.Teams.Find(dbMatch.GoneTeamID).Teamname;
+                viewMatch.HomeScore = dbMatch.HomeTeamScore;
+                viewMatch.GoneScore = dbMatch.GoneTeamScore;
+                viewMatch.Arena = dbContext.Arenas.Find(dbMatch.ArenaID).Arenaname;
+
+                modelMatches.Add(viewMatch);
+            }
+
+            return modelMatches;
         }
     }
 }

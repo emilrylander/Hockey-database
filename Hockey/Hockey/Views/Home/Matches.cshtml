@@ -1,4 +1,5 @@
 ﻿@model Hockey.Models.MatchesViewModel
+
 @{
     ViewBag.Title = "Matches";
 }
@@ -8,6 +9,9 @@
 <table id="MatchTable">
     <thead>
         <tr>
+            <th>
+                 
+            </th>
             <th>
                 Arena
             </th>
@@ -28,6 +32,7 @@
             foreach (var match in Model.matches)
             {
                 <tr>
+                    <td>@Html.DisplayName(match.ID.ToString())   </td>
                     <td>@Html.DisplayName(match.Arena)   </td>
                     <td>@Html.DisplayName(match.HomeTeam)   </td>
                     <td>@Html.DisplayName(match.GoneTeam)   </td>
@@ -43,7 +48,12 @@
 <br /><br /><br />
 
 
-<form action="/Home/Matches" method="get">
+@using (Html.BeginForm("AddMatches", "Home", FormMethod.Post))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    Hockey.Models.MatchViewModel homescore = new Hockey.Models.MatchViewModel();
+
+    Hockey.Models.MatchViewModel gonescore = new Hockey.Models.MatchViewModel();
     <fieldset>
         <legend>Arena</legend>
         <select id="Arena" name="Arena">
@@ -56,7 +66,7 @@
             }
         </select>
     </fieldset>
-
+    <br />
     <fieldset>
         <legend>Home Team</legend>
         <select id="HomeTeam" name="HomeTeam">
@@ -68,15 +78,11 @@
                 }
             }
         </select>
-        @using (Html.BeginForm("", "Home", FormMethod.Post))
-        {
-            @Html.EditorFor(x => x.TeamList, new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
-        }
     </fieldset>
-
+    <br />
     <fieldset>
         <legend>Gone Team</legend>
-        <select id="HomeTeam" name="HomeTeam">
+        <select id="GoneTeam" name="GoneTeam">
             <option value="0">--Select Team--</option>
             @{
                 foreach (var Team in Model.TeamList)
@@ -85,17 +91,29 @@
                 }
             }
         </select>
-        @using (Html.BeginForm("", "Gone", FormMethod.Post))
-        {
-            @Html.EditorFor(x => x.TeamList, new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
-        }
     </fieldset>
-
+    <br />
     <fieldset>
-        <legend>Results</legend>
-
+        <legend>Scores</legend>
+        <p>Home</p>
+        @Html.EditorFor(x => homescore.HomeScore, new { htmlAttributes = new { @Name = "HomeScore", @id = "HomeScore", @min = "0" } })
     </fieldset>
+    <br />
+    <fieldset>
+        <p>Gone</p>
+        @Html.EditorFor(x => gonescore.GoneScore, new { htmlAttributes = new { @Name = "GoneScore", @id = "GoneScore", @min = "0" } })
+    </fieldset>
+    <br />
 
     <input type="submit" value="Add" />
+}
+<br />
 
-</form>
+<legend>Remove Match</legend>
+
+@using (Html.BeginForm("RemoveMatches", "Home", FormMethod.Post))
+{
+    Hockey.Models.Match ID = new Hockey.Models.Match();
+    @Html.EditorFor(x => ID.ID, new { htmlAttributes = new { @Name = "ID", @id = "ID", @min = "0" } })
+    <input type="submit" value="Remove" />
+}

@@ -27,8 +27,11 @@ textarea {
     border: 1px solid black;
     border-collapse: collapse;
     width: 50%;
+    
 }
 #matchTable th, td{
     border: 1px solid black;
-    margin-right: 100px;
+    width: 70px;
+    height: 30px;
+    text-align: center;
 }

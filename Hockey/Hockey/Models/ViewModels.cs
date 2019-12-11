@@ -7,6 +7,7 @@ namespace Hockey.Models
 {
     public class MatchViewModel
     {
+        public int ID { get; set; }
         public string Arena { get; set; }
         public string HomeTeam { get; set; }
         public string GoneTeam { get; set; }

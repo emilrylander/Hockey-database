@@ -20,43 +20,50 @@ namespace Hockey.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddArenas([Bind(Include = "Arenaname")]Arena model)
+        public ActionResult AddArenas(string Arenaname)
         {
-            try
+            List<Arena> Arenas = dbContext.Arenas.ToList();
+            Arena b = new Arena();
+            b.Arenaname = Arenaname;
+
+            if (b.Arenaname == "")
             {
+                ModelState.AddModelError("", "Must enter a name for your Arena!");
 
-                List<Arena> Arenas = dbContext.Arenas.ToList();
+                List<Team> teams = dbContext.Teams.ToList();
 
-                Arena a = new Arena();
-                a.Arenaname = model.Arenaname;
-
-                dbContext.Arenas.Add(a);
+                return View("Teams", teams);
+            }
+            else
+            {
+                dbContext.Arenas.Add(b);
                 dbContext.SaveChanges();
 
                 return RedirectToAction("Arenas");
+            }
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
 
         }
 
         [HttpPost]
-        public ActionResult RemoveArena([Bind(Include = "Arenaname")]Arena model)
+        public ActionResult RemoveArena(string Arenaname)
         {
-            try
+            List<Arena> Arenas = dbContext.Arenas.ToList();
+            Arena b = new Arena();
+            b.Arenaname = Arenaname;
+            if (b.Arenaname == "")
             {
-                Arena ArenaToRemove = dbContext.Arenas.Where(x => x.Arenaname == model.Arenaname).FirstOrDefault();
+                ModelState.AddModelError("", "Must enter a Arena to remove!");
+
+                return View("Arenas", Arenas);
+            }
+            else
+            {
+                Arena ArenaToRemove = dbContext.Arenas.Where(x => x.Arenaname == b.Arenaname).FirstOrDefault();
                 dbContext.Arenas.Remove(ArenaToRemove);
                 dbContext.SaveChanges();
 
                 return RedirectToAction("Arenas");
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 
@@ -67,41 +74,50 @@ namespace Hockey.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddTeams([Bind(Include = "Teamname")]Team model)
+        public ActionResult AddTeams(string Teamname)
         {
-            try
+
+            Team b = new Team();
+            b.Teamname = Teamname;
+
+            if (b.Teamname == "")
             {
-                List<Team> Teams = dbContext.Teams.ToList();
+                ModelState.AddModelError("", "Must enter a Name!");
 
-                Team a = new Team();
-                a.Teamname = model.Teamname;
+                List<Team> teams = dbContext.Teams.ToList();
 
-                dbContext.Teams.Add(a);
+                return View("Teams", teams);
+            }
+            else
+            {
+                dbContext.Teams.Add(b);
                 dbContext.SaveChanges();
 
                 return RedirectToAction("Teams");
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 
         [HttpPost]
-        public ActionResult RemoveTeams([Bind(Include = "Teamname")]Team model)
+        public ActionResult RemoveTeams(string Teamname)
         {
-            try
+            Team b = new Team();
+            b.Teamname = Teamname;
+
+            if (b.Teamname == "")
             {
-                Team teamToRemove = dbContext.Teams.Where(x => x.Teamname == model.Teamname).FirstOrDefault();
+                ModelState.AddModelError("", "Must enter a Name to remove!");
+
+                List<Team> teams = dbContext.Teams.ToList();
+
+                return View("Teams", teams);
+            }
+            else
+            {
+                Team teamToRemove = dbContext.Teams.Where(x => x.Teamname == b.Teamname).FirstOrDefault();
                 dbContext.Teams.Remove(teamToRemove);
                 dbContext.SaveChanges();
 
                 return RedirectToAction("Teams");
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
         }
 
@@ -119,15 +135,15 @@ namespace Hockey.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddMatches( int Arena, int HomeTeam, int GoneTeam, int HomeScore, int GoneScore)
+        public ActionResult AddMatches(int Arena, int HomeTeam, int GoneTeam, int HomeScore, int GoneScore)
         {
-            if(Arena == 0 || HomeTeam == 0 || GoneTeam == 0)
+            if (Arena == 0 || HomeTeam == 0 || GoneTeam == 0)
             {
-                if(Arena == 0)
+                if (Arena == 0)
                     ModelState.AddModelError("", "Must select a Arena!");
-                if(HomeTeam == 0)
+                if (HomeTeam == 0)
                     ModelState.AddModelError("", "Must select a Home Team!");
-                if(GoneTeam == 0)
+                if (GoneTeam == 0)
                     ModelState.AddModelError("", "Must select a Gone Team!");
 
                 MatchesViewModel viewModel = new MatchesViewModel();
@@ -153,7 +169,7 @@ namespace Hockey.Controllers
                 dbContext.SaveChanges();
 
                 return RedirectToAction("matches");
-                
+
             }
             catch (Exception ex)
             {

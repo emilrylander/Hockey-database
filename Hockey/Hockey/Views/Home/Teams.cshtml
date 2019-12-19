@@ -28,11 +28,13 @@
 </table>
 
 <br /><br /><br />
-
+@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+<br />
 <p>Add Teams</p>
 
 @using (Html.BeginForm("AddTeams", "Home", FormMethod.Post))
 {
+
     //vad är den Default värde för den här !!!.
     Hockey.Models.Team team = new Hockey.Models.Team();
     @Html.EditorFor(x => team.Teamname, new { htmlAttributes = new { @Name = "Teamname", @id = "Teamname" } })
